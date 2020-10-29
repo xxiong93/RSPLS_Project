@@ -1,45 +1,47 @@
 "use strict";
+class Game{
+    constructor(){
+        this.playerOne = new Player();
+        this.playerTwo = new Player();
+        this.playerAi = new Machine();
 
-class Animal{
-
-    constructor(species, name){
-        this.species = species;
-        this.name = name;
-
-
+        this.gesture = ["rock", "paper", "scissors", "lizard", "spock"];;
     }
-
-    animalType(name){
-        let creatures = ["dog", "weasel", "bear"];
-        let creatureName;
-        for(let i = Math.floor(Math.random()*5); i < creatures.length; i++){
-            if(i === 0 || i  === 1 ){
-                return creatureName = name;
-            }
-            else{
-                return false;
-            }
+    playGame(){
+        //display human v human or human v AI option
+        let ask = prompt("Would you like to play against another person or the program? Enter 'human' or 'machine'");
+        if(ask === 'human'){
+            //run human v human 
+    
         }
+        else if(ask === 'machine'){
+            //run machine v machine
+        }
+        //must run the game at least 3 times
+            //keep track of points after each "game"
+            //update point total and then re-run function
+        //end game after 3 games
+    
+    
     }
+    
+    
+
 }
-let feline = new Animal("pantherTigris", "tiger");
-let canine = new Animal("dogCanines", "wolf");
-console.log(feline);
-//Everything above this line is test code
 class Player{
-    constructor(name,gesture){
+    constructor(name){
         this.name = name;
         this.score = 0;
-        this.gesture = gesture;
+        
     }
-    gesture = ["rock", "paper", "scissors", "lizard", "spock"];
+    
 }
 
 class Human extends Player{
     constructor(name){
         super(name);
     }
-    chooseGesture(gesture);
+    //chooseGesture(gesture);
     //add in a prompt to choose gesture that will be used
     //validate entry as an available gesture
     //
@@ -49,30 +51,25 @@ class Machine extends Player{
     constructor(name){
         super(name);
     }
-    randomGesture(gesture);
+    //randomGesture(gesture);
 }
 
 let player1 = new Human("Steve Irwin");
 let player2 = new Human("Jeff Corwin");
 let aiPlayer = new Machine("Robot");
 
-function playerShoot(){
-
-
-}
 
 function randomGesture(gesture){
-    gesture = ["rock", "paper", "scissors", "lizard", "spock"];
 
-    for(let i = Math.floor(Math.random()* 5);i < gestures.length; i++){
-        console.log(gestures[i]);
+    for(let i = Math.floor(Math.random()* 5);i < gesture.length; i++){
+        console.log(gesture[i]);
         return;
     }
     
 }
 
 function chooseGesture(gesture){
-    gesture = ["rock", "paper", "scissors", "lizard", "spock"];
+ 
     let ask = prompt("What gesture do you choose? 'rock', 'paper', 'scissors', 'lizard', or 'spock'");
     let choice = "";
     if(ask === 'rock' || ask === 'paper' || ask === 'scissors' || ask === 'lizard' || ask === 'spock'){
@@ -83,15 +80,29 @@ function chooseGesture(gesture){
         chooseGesture(choice);
         return; //validate gesture choice and prompt again
     }
+    
 }
+chooseGesture();
+function gestureWinCondition(gestureOne, gestureTwo){
+    if(gestureOne === 'rock' && gestureTwo === 'scissors' || gestureOne === 'rock' && gestureTwo === 'lizard'){
+        console.log("You win!");
+    }
+    else if(gestureOne === 'scissors' && gestureTwo === 'paper' || gestureOne === 'scissors' && gestureTwo === 'lizard'){
+        console.log("You win!");
+    }
+    else if(gestureOne === 'paper' && gestureTwo === 'rock' || gestureOne === 'paper' && gestureTwo === 'spock'){
+        console.log("You win!");
+    }
+    else if(gestureOne === 'lizard' && gestureTwo === 'spock' || gestureOne === 'lizard' && gestureTwo === 'paper'){
+        console.log("You win!");
+    }
+    else if(gestureOne === 'spock' && gestureTwo === 'rock' || gestureOne === 'spock' && gestureTwo === 'scissors'){
+        console.log("You win!");
+    }
+    else{
+        console.log("You lose. Better luck next time!");
+    }
 
-function playGame(){
-    //display human v human or human v AI option
-    //must run the game at least 3 times
-        //keep track of points after each "game"
-        //update point total and then re-run function
-    //end game after 3 games
 
 
 }
-
