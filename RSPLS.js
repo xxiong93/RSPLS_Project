@@ -24,13 +24,10 @@ class Animal{
 }
 let feline = new Animal("pantherTigris", "tiger");
 let canine = new Animal("dogCanines", "wolf");
-function animalCall(species, name){
-    
-
-}
+console.log(feline);
 //Everything above this line is test code
 class Player{
-    constructor(name, gesture){
+    constructor(name,gesture){
         this.name = name;
         this.score = 0;
         this.gesture = gesture;
@@ -55,4 +52,34 @@ class Machine extends Player{
 
 let player1 = new Human("Bob");
 
-let gestures = ["rock", "paper", "scissors", "lizard", "spock"];
+
+
+function randomGesture(){
+    let gestures = ["rock", "paper", "scissors", "lizard", "spock"];
+
+    for(let i = Math.floor(Math.random()* 5);i < gestures.length; i++){
+        console.log(gestures[i]);
+        return;
+
+    }
+    
+}
+function chooseGesture(){
+    let gestures = ["rock", "paper", "scissors", "lizard", "spock"];
+    let ask = prompt("What gesture do you choose? 'rock', 'paper', 'scissors', 'lizard', or 'spock'");
+    let choice = "";
+    if(ask === 'rock' || ask === 'paper' || ask === 'scissors' || ask === 'lizard' || ask === 'spock'){
+        choice = ask;
+        return;
+    }
+    else{
+        return; //validate gesture choice 
+    }
+}
+
+function countPoints(){
+    
+
+
+}
+
