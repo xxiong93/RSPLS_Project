@@ -6,45 +6,48 @@ class Game{
         this.playerTwo = null;
         //game setup to create human or ai
         
-        this.gesture = ["rock", "paper", "scissors", "lizard", "spock"];
-        this.winner = null;
+        this.gesture = [new Gesture('rock','scissors', 'lizard'), new Gesture('paper', 'rock', 'spock'), new Gesture('scissors', 'paper', 'lizard'), new Gesture('lizard','spock','paper'), new Gesture('spock','scissors','rock')];
+        
     }
     playGame(){
         //display human v human or human v AI option
-        let playerOneGesture;
-        let playerTwoGesture;
-        let choice = prompt("Would you like to play against another person or the program? Enter 'human' or 'machine'");
-        if(choice === 'human'){
-            //run human v human 
-            this.newPlayerOne = new Human("Steve Rogers");
-            this.newPlayerTwo = new Human("Sam Wilson");
-
-            playerOneGesture = this.newPlayerOne.chooseGesture(this.gesture);
-            playerTwoGesture = this.newPlayerTwo.chooseGesture(this.gesture);
-            checkGestures(playerOneGesture, playerTwoGesture);
-
-
-        }
-        else if(choice === 'machine'){
-            //run machine v machine
-            this.newPlayerOne = new Human("Tony Stark");
-            this.newPlayerTwo = new Machine("Ultron");
-            
-            playerOneGesture = this.newPlayerOne.chooseGesture(this.gesture);
-            playerTwoGesture = this.newPlayerTwo.randomGesture(this.gesture);
-        }
-
-        
+        let playerOneOption;
+        let playerTwoOption;
+         
+        //add loop here
+            playerOneOption = this.playerOne.chooseGesture(this.gesture);
+            playerTwoOption = this.playerTwo.chooseGesture(this.gesture);
+            let win = this.playerOne.gestureWinCondition(playerOneOption, playerTwoOption);
+       
         //must run the game at least 3 times
             //keep track of points after each "game"
             //update point total and then re-run function
-        //end game after 3 games
-    
-        
-        
-        
-        
-    
+        //end game after 3 games      
+    }
+
+    gameSetup(){
+        let choice = prompt("Would you like to play against another person or the program? Enter 'human' or 'machine'");
+        if(choice === 'human'){
+        this.playerOne = new Human("Steve Rogers");//put in a gameSetup method
+        this.playerTwo = new Human("Sam Wilson");//put in a gameSetup method
+        }
+        else if(choice === 'machine'){
+        this.playerOne = new Human("Tony Stark");//put in a gameSetup method
+        this.playerTwo = new Machine("Ultron");//put in a gameSetup method
+        }
+    }
+    gestureWinCondition(playerOneGesture, playerTwoGesture){ 
+
+        if(playerOneGesture.beats.contains(playerTwoGesture.name)){
+            this.playerOne.score++;
+
+        }
+        else if(playerOneGesture.name === playerTwoGesture.name){
+
+        }
+        else{
+            this.playerTwo.score++;
+        }
     }
 }
 class Player{
@@ -55,8 +58,9 @@ class Player{
         
         
     }
-    checkGestures(gestureOne, gestureTwo){
-        let check = gestureWinCondition(gestureOne, gestureTwo);
+    
+    compareGestures(playerOne, playerTwo){
+        let check = gestureWinCondition(playerOne, playerTwo);
         return check;
 
     }
@@ -82,90 +86,62 @@ class Human extends Player{
     }
     chooseGesture(gesture){
  
-        let ask = prompt("What gesture do you choose? 0 = rock, 1 = paper, 2 = scissors, 3 = lizard, and 4 = spock");//could set gestures to numerical values for easier use
+        let ask = prompt("What gesture do you choose? 1 = rock, 2 = paper, 3 = scissors, 4 = lizard, and 5 = spock");
         
-        for(let i = 0; i < gesture.length; i++){
-            this.selectedGesture = gesture[ask];
-            return this.selectedGesture;
+        switch (ask) {
+            case '1': //do this for 1-5
+            this.selectedGesture = gesture[0];
+                break;
+            case '2':
+            this.selectedGesure = gesture[1];
+                break;
+            case '3':
+            this.selectedGesure = gesture[2];
+                break;
+            case '4':
+            this.selectedGesure = gesture[3];
+                break;
+            case '5':
+            this.selectedGesure = gesture[4];
+                break;
+            default: //if no cases are hit, do chooseGesture again
+                return this.chooseGesture(gesture);
         }
+
+        
     }
-    gestureWinCondition(gestureOne, gestureTwo){ 
-        if(gestureOne === 'rock' && gestureTwo === 'scissors' || gestureOne === 'rock' && gestureTwo === 'lizard'){
-            
-            return true;
-        }
-        else if(gestureOne === 'scissors' && gestureTwo === 'paper' || gestureOne === 'scissors' && gestureTwo === 'lizard'){
-            
-            return true;
-        }
-        else if(gestureOne === 'paper' && gestureTwo === 'rock' || gestureOne === 'paper' && gestureTwo === 'spock'){
-            
-            return true;
-        }
-        else if(gestureOne === 'lizard' && gestureTwo === 'spock' || gestureOne === 'lizard' && gestureTwo === 'paper'){
-            
-            return true;
-        }
-        else if(gestureOne === 'spock' && gestureTwo === 'rock' || gestureOne === 'spock' && gestureTwo === 'scissors'){
-            
-            return true;
-        }
-        else{
-            
-            return false;
-        }
-    }
-    
+
 }
+    
+
 class Machine extends Player{
     constructor(name){
         super(name);
     }
     chooseGesture(gesture){
  
-        let ask = prompt("What gesture do you choose? 0 = rock, 1 = paper, 2 = scissors, 3 = lizard, and 4 = spock");//could set gestures to numerical values for easier use
-        
-        for(let i = 0; i < gesture.length; i++){
-            this.selectedGesture = gesture[ask];
-            return this.selectedGesture;
-        }
-    }
-    gestureWinCondition(gestureOne, gestureTwo){ 
-        if(gestureOne === 'rock' && gestureTwo === 'scissors' || gestureOne === 'rock' && gestureTwo === 'lizard'){
-            
-            return true;
-        }
-        else if(gestureOne === 'scissors' && gestureTwo === 'paper' || gestureOne === 'scissors' && gestureTwo === 'lizard'){
-            
-            return true;
-        }
-        else if(gestureOne === 'paper' && gestureTwo === 'rock' || gestureOne === 'paper' && gestureTwo === 'spock'){
-            
-            return true;
-        }
-        else if(gestureOne === 'lizard' && gestureTwo === 'spock' || gestureOne === 'lizard' && gestureTwo === 'paper'){
-            
-            return true;
-        }
-        else if(gestureOne === 'spock' && gestureTwo === 'rock' || gestureOne === 'spock' && gestureTwo === 'scissors'){
-            
-            return true;
-        }
-        else{
-            
-            return false;
-        }
-    }
+        let gestureFound;
+        let i = Math.floor(Math.random()* gesture.length);
+            gestureFound = gesture[i];
+            return gestureFound;
+    }   
 }
 
+
+
+class Gesture {
+    contsructor(name,beatsOne,beatsTwo){
+        this.name = name;
+        this.beats = [beatsOne,beatsTwo];
+
+    }
+
+
+}
 let game = new Game();
 game.playGame();
 
-// let testPlayer = new Human("rick");
-// let testPlayerOne = new Human("james");
-// // testPlayer.chooseGesture('rock');
-// // testPlayerOne.chooseGesture('scissors');
-// testPlayer.checkGestures('rock', 'scissors');
+
 
     
 
