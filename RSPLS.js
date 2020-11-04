@@ -4,41 +4,48 @@ class Game{
     constructor(){
         this.playerOne = null;
         this.playerTwo = null;
-        //game setup to create human or ai
+
         
         this.gesture = [new Gesture('rock','scissors', 'lizard'), new Gesture('paper', 'rock', 'spock'), new Gesture('scissors', 'paper', 'lizard'), new Gesture('lizard','spock','paper'), new Gesture('spock','scissors','rock')];
         
     }
     playGame(){
-        //display human v human or human v AI option
-        let playerOneOption;
-        let playerTwoOption;
-         
-        //add loop here
-            playerOneOption = this.playerOne.chooseGesture(this.gesture);
-            playerTwoOption = this.playerTwo.chooseGesture(this.gesture);
-            let win = this.playerOne.gestureWinCondition(playerOneOption, playerTwoOption);
-       
-        //must run the game at least 3 times
-            //keep track of points after each "game"
-            //update point total and then re-run function
-        //end game after 3 games      
+
+        //let playerOneOption;
+        //let playerTwoOption;
+        this.gameSetup();
+        while(this.playerOne.score < 2 && this.playerTwo.score < 2){
+                    
+            let playerOneOption = this.playerOne.chooseGesture(this.gesture);
+            let playerTwoOption = this.playerTwo.chooseGesture(this.gesture);
+            let win = this.gestureWinCondition(playerOneOption, playerTwoOption);
+        }
+        if(this.playerOne.score > this.playerTwo.score){
+            console.log("Player One wins!");
+        }
+        else{
+            console.log("Player Two wins!");
+        }
     }
 
     gameSetup(){
         let choice = prompt("Would you like to play against another person or the program? Enter 'human' or 'machine'");
+        
         if(choice === 'human'){
-        this.playerOne = new Human("Steve Rogers");//put in a gameSetup method
-        this.playerTwo = new Human("Sam Wilson");//put in a gameSetup method
+        this.playerOne = new Human("Steve Rogers");
+        this.playerTwo = new Human("Bucky Barnes");
         }
         else if(choice === 'machine'){
-        this.playerOne = new Human("Tony Stark");//put in a gameSetup method
-        this.playerTwo = new Machine("Ultron");//put in a gameSetup method
+        this.playerOne = new Human("Tony Stark");
+        this.playerTwo = new Machine("Ultron");
+        }
+        else{
+            this.gameSetup();
         }
     }
     gestureWinCondition(playerOneGesture, playerTwoGesture){ 
 
-        if(playerOneGesture.beats.contains(playerTwoGesture.name)){
+        if(playerOneGesture.beats.includes(playerTwoGesture.name)){
             this.playerOne.score++;
 
         }
@@ -49,6 +56,11 @@ class Game{
             this.playerTwo.score++;
         }
     }
+
+userValidation(valid){
+
+
+}
 }
 class Player{
     constructor(name){
@@ -56,28 +68,9 @@ class Player{
         this.score = 0;
         this.selectedGesture;
         
-        
     }
-    
-    compareGestures(playerOne, playerTwo){
-        let check = gestureWinCondition(playerOne, playerTwo);
-        return check;
 
-    }
-    
-    randomGesture(gesture){
-        
-        let gestureFound;
-        for(let i = Math.floor(Math.random()* 5);i < gesture.length; i++){
-            gestureFound = gesture[i];
-            return gestureFound;
-        }
-                
-    }
-    
 }
-
-
 
 class Human extends Player{
     constructor(name){
@@ -89,31 +82,29 @@ class Human extends Player{
         let ask = prompt("What gesture do you choose? 1 = rock, 2 = paper, 3 = scissors, 4 = lizard, and 5 = spock");
         
         switch (ask) {
-            case '1': //do this for 1-5
+            case '1': 
             this.selectedGesture = gesture[0];
-                break;
+                return this.selectedGesture;
             case '2':
-            this.selectedGesure = gesture[1];
-                break;
+            this.selectedGesture = gesture[1];
+                return this.selectedGesture;
             case '3':
-            this.selectedGesure = gesture[2];
-                break;
+            this.selectedGesture = gesture[2];
+                return this.selectedGesture;
             case '4':
-            this.selectedGesure = gesture[3];
-                break;
+            this.selectedGesture = gesture[3];
+                return this.selectedGesture;
             case '5':
-            this.selectedGesure = gesture[4];
-                break;
-            default: //if no cases are hit, do chooseGesture again
+            this.selectedGesture = gesture[4];
+                return this.selectedGesture;
+            default: 
                 return this.chooseGesture(gesture);
         }
-
-        
+       
     }
 
 }
     
-
 class Machine extends Player{
     constructor(name){
         super(name);
@@ -128,9 +119,8 @@ class Machine extends Player{
 }
 
 
-
 class Gesture {
-    contsructor(name,beatsOne,beatsTwo){
+    constructor(name,beatsOne,beatsTwo){
         this.name = name;
         this.beats = [beatsOne,beatsTwo];
 
